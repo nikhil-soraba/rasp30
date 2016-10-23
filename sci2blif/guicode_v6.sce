@@ -75,6 +75,7 @@ file30_menu = uimenu("Parent", file23_menu, "Label", gettext("HH Neuron"), "call
 
 file32_menu = uimenu("Parent", file31_menu, "Label", gettext("nFET"), "callback", "file31_callback()");
 file33_menu = uimenu("Parent", file31_menu, "Label", gettext("pFET"), "callback", "file32_callback()");
+file34_menu = uimenu("Parent", file31_menu, "Label", gettext("OTA"), "callback", "file33_callback()");
 
 update_menu = uimenu("Parent", gui, "Label", gettext("Update"),'ForegroundColor',[1,1,1]);
 update1_menu = uimenu("Parent", update_menu, "Label", gettext("Update RASP Tools"), "callback", "up1_callback()");
@@ -903,6 +904,24 @@ function file25_callback()
     global scs_m;
     text_box_callback(handles)
     xcos(file_name);
+endfunction
+
+function file33_callback()
+    global file_name path fname extension
+
+    unix_s('cp /home/ubuntu/rasp30/work/examples/SIM/ota_lpf.xcos /home/ubuntu/RASP_Workspace/demo_files/SIM/');
+    file_name= '/home/ubuntu/RASP_Workspace/demo_files/SIM/ota_lpf.xcos';
+    [path,fname,extension]=fileparts(file_name);
+
+    dirpwd = pwd()+'/';
+
+    if(path ~= dirpwd) then
+        cd(path);
+        filebrowser();
+    end
+
+    xcos(file_name);
+
 endfunction
 
 function file18_callback()
